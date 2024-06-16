@@ -1,6 +1,150 @@
+:root {
+  --primary-color: #2db8eb;
+  --background-color-1: #fff;
+  --sec-color: #292937;
+  background-image: url(/images/site/checkerboard.jpg);
+  background-repeat: repeat;
+}
+
 /******* Change Box Model ***************/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  border-radius: .5rem;
+  border: .35em var(--primary-color) solid;
+  background-color: var(--background-color-1);
+  max-width: 1000px;
+  margin: 1em auto;
+  padding: 1em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#top-header {
+  display: flex;
+}
+
+#tools {
+  position: absolute;
+  right: 1em;
+  top: 1.5em;
+}
+
+.siteName a {
+  font-size: 2.5rem;
+  color: var(--sec-color);
+}
+
+a {
+  text-decoration: none;
+}
+
+nav {
+  list-style-type: none;
+  display: flex;
+  background-color: var(--sec-color);
+  padding: 0;
+  width: 100%;
+}
+
+nav a {
+  color: #fff;
+  padding: 1em;
+  margin: auto;
+}
+
+nav a:hover {
+  color: var(--sec-color);
+  background-color: #fff;
+}
+
+h1, h2, h3 {
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+}
+
+.hero {
+  position: relative;
+  text-align: center;
+}
+
+.hero img {
+  margin: auto;
+  padding: 0;
+  width: 80%;
+}
+
+.calltoaction {
+  position: absolute;
+  left: 1em;
+  bottom: 2em;
+  color: var(--primary-color);
+  background-color: rgb(255, 255, 255, 60%);
+  font-size: 1.1rem;
+  text-align: left;
+  padding: 1em;
+}
+
+.calltoaction p {
+  padding: 0;
+  margin: 0;
+}
+
+.calltoaction img {
+ display: block;
+ padding: .5em;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+
+.card {
+  width: 50%;
+  min-width: 300px;
+  margin: auto;
+}
+
+.card li {
+  margin: 1em;
+}
+
+.upgrades {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.upgrades h3 {
+  grid-column: 1/3;
+}
+
+figure {
+  display: block;
+  text-align: center;
+  width: auto;
+  height: 100px;
+}
+
+figure img {
+  background-color: var(--primary-color);
+}
+
+@media screen and (max-width: 700px) {
+  .calltoaction {
+    font-size: .8rem;
+    padding: .5em;
+  }
+  .calltoaction img {
+    width: 100px;
+  }
+
+  .calltoaction h2 {
+    padding-top: 0;
+    margin-top: 0;
+  }
 }
