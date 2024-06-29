@@ -6,7 +6,7 @@
   background-repeat: repeat;
 }
 
-/******* Change Box Model ***************/
+/* ========== Change Box Model ==========*/
 *,
 *:before,
 *:after {
@@ -142,6 +142,53 @@ figure img {
   background-color: var(--primary-color);
 }
 
+.notice {
+  color: red;
+}
+
+/* ========== CLASSIFICATION STYLING ==========*/
+
+#inv-display {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#inv-display li {
+  list-style-type: none;
+  padding: .5em;
+  border: 1px #ddd solid;
+  border-radius: 5px;
+  margin: auto;
+  text-align: center;
+}
+
+#inv-display li hr {
+  height: 3px;
+  background-color: #292937;
+}
+
+/* ========== DETAIL VIEW STYLING ==========*/
+.detailview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+
+.detailview img {
+  width: 100%;
+  margin: auto 0;
+}
+
+.details ul li:nth-child(odd) {
+  background-color: #eee;
+}
+
+.details li {
+  list-style-type: none;
+  font-size: large;
+  padding: .5em;
+}
+
 @media screen and (max-width: 700px) {
   .calltoaction {
     font-size: .8rem;
@@ -154,5 +201,17 @@ figure img {
   .calltoaction h2 {
     padding-top: 0;
     margin-top: 0;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+  }
+
+  nav ul li {
+    margin: .5em;
+  }
+
+  .detailview {
+    grid-template-columns: 1fr;
   }
 }
