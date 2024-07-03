@@ -1,0 +1,17 @@
+<% if(title){ %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<%# message %>
+
+<form action="" method="post" class="wf">
+    <p><strong>* All fields are required</strong></p>
+    <label>First Name:<input type="text" name="account_firstname" required></label>
+    <label>Last Name:<input type="text" name="account_lastname" required></label>
+    <label>Email:<input type="email" name="account_email" required></label>
+    <label>Password:<input type="password" name="account_password" required></label>
+    <button type="submit">REGISTER</button>
+    <p>* For password: 12 characters in length, minimum contain at least 1 capital letter, 1 number, 1 special character</p>
+</form>

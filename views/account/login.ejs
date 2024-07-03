@@ -6,9 +6,9 @@
 
 <%# message %>
 
-<form action="" method="post" class="wf">
-    <label>Email:<input type="email"></label>
-    <label>Password:<input type="text"></label>
+<form action="" method="get" class="wf">
+    <label>Email:<input type="email" name="account_email" required></label>
+    <label>Password: <input type="password" name="account_password" id="pword" required></label> 
     <button type="submit">LOGIN</button>
-    <p>No Account? <a href="account/signup">Sign Up</a></p>
+    <p>No Account? <a href="/account/register">Sign Up</a></p>
 </form>

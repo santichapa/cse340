@@ -190,8 +190,7 @@ figure img {
   padding: .5em;
 }
 
-/* ========== LOGIN VIEW STYLING ==========*/
-
+/* ========== LOGIN/REGISTER VIEW STYLING ==========*/
 .wf {
   background-color: var(--primary-color);
   border: 1px #292937 solid;
@@ -206,6 +205,7 @@ figure img {
   display: block;
   margin: auto auto 1em;
   height: 2.4rem;
+  border: 2px #70707d solid;
   border-radius: .3rem;
   background-color: #ddd;
   width: 95%;
@@ -214,6 +214,7 @@ figure img {
 }
 
 .wf button {
+  border: none;
   padding: .5em 1em;
   border-radius: .5em;
   font-weight: 700;
