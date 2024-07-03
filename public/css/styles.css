@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #2db8eb;
+  --primary-color: #3998bb;
   --background-color-1: #fff;
   --sec-color: #292937;
   background-image: url(/images/site/checkerboard.jpg);
@@ -188,6 +188,40 @@ figure img {
   list-style-type: none;
   font-size: large;
   padding: .5em;
+}
+
+/* ========== LOGIN VIEW STYLING ==========*/
+
+.wf {
+  background-color: var(--primary-color);
+  border: 1px #292937 solid;
+  border-radius: .5em;
+  padding: .3em;
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+}
+
+.wf input {
+  display: block;
+  margin: auto auto 1em;
+  height: 2.4rem;
+  border-radius: .3rem;
+  background-color: #ddd;
+  width: 95%;
+  max-width: 400px;
+  padding-bottom: .3em;
+}
+
+.wf button {
+  padding: .5em 1em;
+  border-radius: .5em;
+  font-weight: 700;
+  background-image: linear-gradient(#fff, #aaa);
+}
+
+.wf button:hover {
+  text-shadow:1px 3px 10px #fff;
 }
 
 @media screen and (max-width: 700px) {

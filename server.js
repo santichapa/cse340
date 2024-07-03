@@ -12,6 +12,7 @@ const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const accountRoute = require("./routes/accountRoute")
 const utilities = require("./utilities/")
 const session = require("express-session")
 const pool = require("./database/")
@@ -47,13 +48,16 @@ app.set("layout", "./layouts/layout") // not at views root
 /* ***********************
  * Routes
  *************************/
-app.use(static)
+app.use(static);
 
 // Index route
-app.get("/", utilities.handleErrors(baseController.buildHome))
+app.get("/", utilities.handleErrors(baseController.buildHome));
 
 // Inventory Routes
-app.use("/inv", inventoryRoute)
+app.use("/inv", inventoryRoute);
+
+// Account Routes
+app.use("/account", accountRoute);
 
 // File Not Found Route - must be last route in wlist
 app.use(async (req, res, next) => {
