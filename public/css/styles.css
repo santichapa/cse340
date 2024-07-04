@@ -207,10 +207,26 @@ figure img {
   height: 2.4rem;
   border: 2px #70707d solid;
   border-radius: .3rem;
-  background-color: #ddd;
+  background-color: #eee;
+  color: #555;
   width: 95%;
   max-width: 400px;
   padding-bottom: .3em;
+}
+
+.wf div {
+  text-align: left;
+  padding: 1em;
+  font-size: small;
+  font-weight: 700;
+}
+
+.register input:required:invalid, .register input:focus:invalid {
+  border-left: .3em solid red;
+}
+
+.register input:required:valid {
+  border-left: .3em solid green;
 }
 
 .wf button {
