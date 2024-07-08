@@ -14,6 +14,6 @@
 <% } %>
 
 <form action="/inv/add-classification" method="post" class="wf">
-    <label>Classification Name: <div><span>NAME MUST BE ALPHABETIC CHARACTERS ONLY</span></div><input type="text" name="classification_name" required></label> 
+    <label>Classification Name: <div><span>NAME MUST BE ALPHABETIC CHARACTERS ONLY</span></div><input type="text" name="classification_name" pattern="[A-Za-z]+" required></label> 
     <button type="submit">Add Classification</button>
 </form>

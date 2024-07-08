@@ -1,0 +1,31 @@
+<% if(title){ %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+<%- messages() %>
+
+<% if(errors) { %>
+    <ul class="error">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>    
+    <%    }); %>
+    </ul>
+<% } %>
+
+<form action="/inv/add-inventory" method="post" class="wf new-vehicle">
+    <div><span>ALL FIELDS ARE REQUIRED</span></div>
+    <label>Classification
+        <%- classificationList %>
+    </label>
+    <label>Make <input type="text" name="inv_make" id="inv_make" placeholder="min of 3 characters" pattern="[A-Za-z0-9]{3,}" title="Three or more alphanumeric characters" value="<% locals.inv_make %>" required></label>
+    <label>Model <input type="text" name="inv_model" id="inv_model" placeholder="min of 3 characters" pattern="[A-Za-z0-9]{3,}" title="Three or more alphanumeric characters" value="<% locals.inv_model %>" required></label>
+    <label>Description<textarea name="inv_description" id="inv_description" cols="30" rows="7" value="<% locals.inv_description %>" required></textarea></label>
+    <label>Image Path <input type="text" name="inv_image" id="inv_image" value="/images/vehicles/no-image.png" value="<% locals.inv_image %>" required></label>
+    <label>Thumbnail Path <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="/images/vehicles/no-image.png" value="<% locals.inv_thumbnail %>" required></label>
+    <label>Price <input type="number" name="inv_price" id="inv_price" placeholder="decimal or integer" step="0.01" value="<% locals.inv_price %>" required></label>
+    <label>Year<input type="number" name="inv_year" id="inv_year" placeholder="4-digit year" maxlength="4" title="Enter a four-digit number" value="<% locals.inv_year %>" required></label>
+    <label>Miles<input type="number" name="inv_miles" id="inv_miles" placeholder="digits only" value="<% locals.inv_miles %>" required></label>
+    <label>Color <input type="text" name="inv_color" id="inv_color" pattern="[A-Za-z]+" value="<% locals.inv_color %>" required></label>
+    <button type="submit">Add Vehicle</button>
+</form>

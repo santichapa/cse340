@@ -87,4 +87,80 @@ invCont.addNewClassification = async function (req, res) {
   }
 }
 
+/* ***************************
+ *  Build add vehicle view
+ * ************************** */
+invCont.buildAddInventory = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  let classificationList = await utilities.buildClassificationList();
+  res.render("inventory/add-inventory", {
+    title: "Add New Vehicle",
+    nav,
+    errors: null,
+    classificationList,
+  })
+}
+
+/* ****************************************
+*  Process new vehicle
+* *************************************** */
+invCont.addNewVehicle = async function (req, res) {
+  let nav = await utilities.getNav();
+  let classificationList = await utilities.buildClassificationList();
+  const {
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color
+  } = req.body;
+  
+  const addVehicleResult = await invModel.addNewVehicle(
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color)
+
+  if (addVehicleResult) {
+      req.flash(
+          "notice",
+          `Congratulations, "${inv_color} ${inv_make} ${inv_model} ${inv_year}" Added.`
+      )
+      res.status(201).render("inventory/add-inventory", {
+          title: "Add New Vehicle",
+          nav,
+          errors: null,
+          classificationList,
+      })
+  } else {
+      req.flash("notice", "Sorry, the registration failed.");
+      res.status(501).render("inventory/add-inventory", {
+          title: "Add New Vehicle (error)",
+          nav,
+          classificationList,
+          classification_id,
+          inv_make,
+          inv_model,
+          inv_description,
+          inv_image,
+          inv_thumbnail,
+          inv_price,
+          inv_year,
+          inv_miles,
+          inv_color
+      })
+  }
+}
+
 module.exports = invCont

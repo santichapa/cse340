@@ -195,7 +195,7 @@ figure img {
   padding: .5em;
 }
 
-/* ========== LOGIN/REGISTER VIEW STYLING ==========*/
+/* ========== LOGIN/REGISTER STYLING ==========*/
 .wf {
   background-color: var(--primary-color);
   border: 1px #292937 solid;
@@ -206,7 +206,7 @@ figure img {
   text-align: center;
 }
 
-.wf input {
+.wf input, .wf select, .wf textarea {
   display: block;
   margin: auto auto 1em;
   height: 2.4rem;
@@ -244,6 +244,14 @@ figure img {
 
 .wf button:hover {
   text-shadow:1px 3px 10px #fff;
+}
+
+.new-vehicle {
+  text-align: left;
+}
+
+.new-vehicle label, button {
+  margin-left: 1em;
 }
 
 @media screen and (max-width: 700px) {

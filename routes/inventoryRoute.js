@@ -23,4 +23,13 @@ router.post("/add-classification",
     addValidate.checkClassificationName,
     utilities.handleErrors(invController.addNewClassification));
 
+// Route to build view to add new vehicle
+router.get("/add-inventory", invController.buildAddInventory);
+
+// Route to post the new vehicle
+router.post("/add-inventory",
+    addValidate.newVehicleRules(),
+    addValidate.checkVehicleData,
+    utilities.handleErrors(invController.addNewVehicle));
+
 module.exports = router;
