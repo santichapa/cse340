@@ -84,6 +84,7 @@ h1, h2, h3 {
   margin: auto;
   padding: 0;
   width: 80%;
+  height: auto;
 }
 
 .calltoaction {
@@ -143,6 +144,10 @@ figure img {
 }
 
 .notice {
+  color: blue;
+}
+
+.error {
   color: red;
 }
 

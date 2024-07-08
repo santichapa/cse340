@@ -19,6 +19,9 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Build detail by inventory ID
+ * ************************** */
 invCont.buildByInventoryId = async function (req, res, next) {
   const inv_id = req.params.invId
   const data = await invModel.getVehicleByInventoryId(inv_id)
@@ -30,6 +33,58 @@ invCont.buildByInventoryId = async function (req, res, next) {
     nav,
     detail
   })
+}
+
+/* ***************************
+ *  Build management view
+ * ************************** */
+invCont.buildManagement = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("./inventory/management", {
+    title: "Vehicle Management",
+    nav,
+    errors: null,
+  })
+}
+
+/* ***************************
+ *  Build add classification view
+ * ************************** */
+invCont.buildAddClassification = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("./inventory/add-classification", {
+    title: "Add New Classification",
+    nav,
+    errors: null,
+  })
+}
+
+/* ****************************************
+*  Process new classification
+* *************************************** */
+invCont.addNewClassification = async function (req, res) {
+  let nav = await utilities.getNav();
+  const {classification_name} = req.body;
+  
+  const addClassResult = await invModel.addNewClassification(classification_name)
+
+  if (addClassResult) {
+      req.flash(
+          "notice",
+          `Congratulations, new classification "${classification_name}" Added.`
+      )
+      res.status(201).render("inventory/add-classification", {
+          title: "Add New Classification",
+          nav,
+          errors: null,
+      })
+  } else {
+      req.flash("notice", "Sorry, the registration failed.");
+      res.status(501).render("inventory/add-classification", {
+          title: "Add New Classification",
+          nav,
+      })
+  }
 }
 
 module.exports = invCont
