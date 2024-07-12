@@ -206,7 +206,10 @@ figure img {
   text-align: center;
 }
 
-.wf input, .wf select, .wf textarea {
+.wf input, 
+.wf select, 
+.wf textarea {
+  /* appearance: none; */
   display: block;
   margin: auto auto 1em;
   height: 2.4rem;
@@ -252,6 +255,30 @@ figure img {
 
 .new-vehicle label, button {
   margin-left: 1em;
+}
+
+#invDisplay {
+  margin: .5em;
+  padding-bottom: .5em;
+  border: 1px #ddd solid;
+  border-collapse: collapse;
+}
+
+#invDisplay tr:nth-child(even) {
+  background-color: #ddd;
+  border: none;
+}
+
+#invDisplay td {
+  padding: .5em;
+}
+
+.classList {
+  margin: auto 1em;
+  height: 2.4rem;
+  border: 2px #70707d solid;
+  border-radius: .3rem;
+  background-color: #eee;
 }
 
 @media screen and (max-width: 700px) {

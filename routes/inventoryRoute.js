@@ -12,7 +12,7 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId));
 
 // Route to build management view
-router.get("/management", utilities.handleErrors(invController.buildManagement));
+router.get("/", utilities.handleErrors(invController.buildManagement));
 
 // Route to build view to add new classification
 router.get("/add-classification", invController.buildAddClassification);
@@ -31,5 +31,17 @@ router.post("/add-inventory",
     addValidate.newVehicleRules(),
     addValidate.checkVehicleData,
     utilities.handleErrors(invController.addNewVehicle));
+
+// Route to deliver the Inv management view by classification id
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
+// Route to edit a vehicle    
+// router.get("/edit/:invId", utilities.handleErrors(invController.editByInvId))
+
+// Route to delete confirmation view
+// router.get("/delete/:invId", utilities.handleErrors(invController.buildDeleteView))
+
+// Route to delete a vehicle
+// router.post("/delete/", utilities.handleErrors(invController.deleteVehicleByInvId))
 
 module.exports = router;
