@@ -274,4 +274,74 @@ invCont.updateInventory = async function (req, res) {
   }
 }
 
+/* ***************************
+ *  Build delete confirmation view
+ * ************************** */
+invCont.buildDeleteConfirmation = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  let inv_id = parseInt(req.params.inv_id)
+
+  let invData = await invModel.getVehicleByInventoryId(inv_id)
+  invData = invData[0]
+  const itemName = `${invData.inv_make} ${invData.inv_model}`
+  res.render("inventory/delete-confirm", {
+    title: "Delete " + itemName,
+    nav,
+    errors: null,
+    inv_id: inv_id,
+    inv_make: invData.inv_make,
+    inv_model: invData.inv_model,
+    inv_year: invData.inv_year,
+    inv_price: invData.inv_price,
+  })
+}
+
+/* ****************************************
+*  Process delete inventory item
+* *************************************** */
+invCont.deleteInventoryItem = async function (req, res) {
+  let nav = await utilities.getNav();
+  let classificationList = await utilities.buildClassificationList();
+
+  const { inv_id } = req.body
+  
+  const deleteResult = await invModel.deleteInventoryItem(inv_id)
+  if (deleteResult) {
+      req.flash(
+          "notice",
+          `Congratulations, vehicle Deleted.`
+      )
+      res.status(201).render("inventory/management", {
+          title: "Vehicle Management",
+          nav,
+          errors: null,
+          classificationList,
+      })
+  } else {
+      req.flash("error", "Sorry, the inventory update failed.");
+      res.status(501).render("inventory/management", {
+        title: "Vehicle Management (error)",
+        nav,
+        classificationList,
+      })
+  }
+}
+
+// else {
+//   req.flash("notice", "Sorry, the inventory update failed.");
+//   let invData = await invModel.getVehicleByInventoryId(inv_id)
+//   invData = invData[0]
+//   const itemName = `${invData.inv_make} ${invData.inv_model}`
+//   res.status(501).render("inventory/delete-confirm", {
+//     title: "Delete " + itemName,
+//     nav,
+//     errors: null,
+//     inv_id: inv_id,
+//     inv_make: invData.inv_make,
+//     inv_model: invData.inv_model,
+//     inv_year: invData.inv_year,
+//     inv_price: invData.inv_price,
+//   })
+// }
+
 module.exports = invCont

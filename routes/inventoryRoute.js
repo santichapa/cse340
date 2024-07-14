@@ -39,16 +39,16 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 // Route to vehicle edit view    
 router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditInventory))
 
-// Route to vehicle edit view    
+// Route to post inventory update    
 router.post("/edit/", 
     validate.newVehicleRules(),
     validate.checkUpdateData,
     utilities.handleErrors(invController.updateInventory))
 
 // Route to delete confirmation view
-// router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteView))
+router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteConfirmation))
 
 // Route to delete a vehicle
-// router.post("/delete/:inv_id", utilities.handleErrors(invController.deleteVehicleByInvId))
+router.post("/delete/", utilities.handleErrors(invController.deleteInventoryItem))
 
 module.exports = router;
