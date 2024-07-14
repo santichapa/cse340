@@ -13,14 +13,14 @@
     </ul>
 <% } %>
 
-<form action="/inv/add-inventory" method="post" class="wf new-vehicle">
+<form action="/inv/add-inventory" method="post" class="wf vehicle-form">
     <div><span>ALL FIELDS ARE REQUIRED</span></div>
     <label>Classification
-        <%- classificationList %>
+        <%= classificationList %>
     </label>
     <label>Make <input type="text" name="inv_make" id="inv_make" placeholder="min of 3 characters" pattern="[A-Za-z0-9]{3,}" title="Three or more alphanumeric characters" value="<% locals.inv_make %>" required></label>
     <label>Model <input type="text" name="inv_model" id="inv_model" placeholder="min of 3 characters" pattern="[A-Za-z0-9]{3,}" title="Three or more alphanumeric characters" value="<% locals.inv_model %>" required></label>
-    <label>Description<textarea name="inv_description" id="inv_description" cols="30" rows="7" required></textarea></label>
+    <label>Description<textarea name="inv_description" id="inv_description" cols="30" rows="7" required><% locals.inv_description %></textarea></label>
     <label>Image Path <input type="text" name="inv_image" id="inv_image" value="/images/vehicles/no-image.png" required></label>
     <label>Thumbnail Path <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="/images/vehicles/no-image-tn.png" required></label>
     <label>Price <input type="number" name="inv_price" id="inv_price" placeholder="decimal or integer" step="0.01" value="<% locals.inv_price %>" required></label>

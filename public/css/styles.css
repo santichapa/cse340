@@ -249,11 +249,11 @@ figure img {
   text-shadow:1px 3px 10px #fff;
 }
 
-.new-vehicle {
+.vehicle-form {
   text-align: left;
 }
 
-.new-vehicle label, button {
+.vehicle-form label, button {
   margin-left: 1em;
 }
 

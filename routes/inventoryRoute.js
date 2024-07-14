@@ -4,6 +4,7 @@ const router = new express.Router()
 const invController = require("../controllers/invController")
 const utilities = require("../utilities/")
 const addValidate = require("../utilities/inventory-validation")
+const validate = require("../utilities/inventory-validation")
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
@@ -35,13 +36,19 @@ router.post("/add-inventory",
 // Route to deliver the Inv management view by classification id
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
-// Route to edit a vehicle    
-// router.get("/edit/:invId", utilities.handleErrors(invController.editByInvId))
+// Route to vehicle edit view    
+router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditInventory))
+
+// Route to vehicle edit view    
+router.post("/edit/", 
+    validate.newVehicleRules(),
+    validate.checkUpdateData,
+    utilities.handleErrors(invController.updateInventory))
 
 // Route to delete confirmation view
-// router.get("/delete/:invId", utilities.handleErrors(invController.buildDeleteView))
+// router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteView))
 
 // Route to delete a vehicle
-// router.post("/delete/", utilities.handleErrors(invController.deleteVehicleByInvId))
+// router.post("/delete/:inv_id", utilities.handleErrors(invController.deleteVehicleByInvId))
 
 module.exports = router;
