@@ -145,6 +145,19 @@ Util.checkLogin = (req, res, next) => {
 }
 
 /* ****************************************
+ *  Check Employee Status
+ * ************************************ */
+Util.checkAccountType = (req, res, next) => {
+  accountType = res.locals.accountData.account_type
+  if (accountType === "Employee" || accountType === "Admin") {
+    next();
+  } else {
+    req.flash("error", "Access Unauthorized")
+    return res.redirect("../../")
+  }
+}
+
+/* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
