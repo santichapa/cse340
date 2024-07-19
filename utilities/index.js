@@ -145,6 +145,17 @@ Util.checkLogin = (req, res, next) => {
 }
 
 /* ****************************************
+ *  Check Not Loggedin
+ * ************************************ */
+Util.checkNotLoggedin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    return res.redirect("../../")
+  } else {
+    next();
+  }
+}
+
+/* ****************************************
  *  Check Employee Status
  * ************************************ */
 Util.checkAccountType = (req, res, next) => {

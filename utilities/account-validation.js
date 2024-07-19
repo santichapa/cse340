@@ -67,9 +67,9 @@ validate.checkRegData = async (req, res, next) => {
             errors,
             title: "Registration",
             nav,
-            account_firstname, 
-            account_lastname, 
-            account_email,
+            account_firstname: account_firstname, 
+            account_lastname: account_lastname, 
+            account_email: account_email,
         })
         return
     }
@@ -125,6 +125,61 @@ validate.checkLoginData = async (req, res, next) => {
             title: "Login",
             nav,
             account_email,
+        })
+        return
+    }
+    next()
+}
+
+/*  **********************************
+  *  Update Account Data Validation Rules
+  * ********************************* */
+validate.updateRules = () => {
+    return [
+        // firstname is required and must be string
+        body("account_firstname")
+        .trim()
+        .escape()
+        .notEmpty()
+        .isLength({ min: 1 })
+        .withMessage("Please provide a first name."), // on error this message is displayed
+        
+        // lastname is required and must be string
+        body("account_lastname")
+        .trim()
+        .escape()
+        .notEmpty()
+        .isLength({ min: 1 })
+        .withMessage("Please provide a last name."),
+
+        // valid email is required and cannot already exist in the DB
+        body("account_email")
+        .trim()
+        .escape()
+        .notEmpty()
+        .isEmail()
+        .normalizeEmail()
+        .withMessage("A valid email is required.")
+    ]
+ }
+
+
+/* ******************************
+ * Check data and return errors or continue to Update Account
+ * ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+    const { account_firstname, account_lastname, account_email } = req.body;
+    let errors = [];
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav();
+        res.render("account/edit-account", {
+            errors,
+            title: "Edit Account",
+            nav,
+            account_firstname: account_firstname, 
+            account_lastname: account_lastname, 
+            account_email: account_email,
         })
         return
     }

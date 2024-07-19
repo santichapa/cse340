@@ -12,7 +12,9 @@ router.get("/",
     utilities.handleErrors(accountController.buildAccountManagement))
 
 // Route to build account login view
-router.get("/login", utilities.handleErrors(accountController.buildLogin));
+router.get("/login", 
+    utilities.checkNotLoggedin,
+    utilities.handleErrors(accountController.buildLogin));
 
 // Route to post the login
 router.post("/login", 
@@ -21,13 +23,28 @@ router.post("/login",
     utilities.handleErrors(accountController.accountLogin))
 
 // Route to get the regitration view
-router.get("/register", utilities.handleErrors(accountController.buildRegister));
+router.get("/register", 
+    utilities.checkNotLoggedin,
+    utilities.handleErrors(accountController.buildRegister));
 
 // Route to post the registration
 router.post("/register", 
     regValidate.registrationRules(),
     regValidate.checkRegData,
     utilities.handleErrors(accountController.registerAccount)
+);
+
+// Route to build the update account view
+router.get("/edit-account/", 
+    utilities.checkLogin,
+    utilities.handleErrors(accountController.buildEditAccount));
+
+// Route to post the account updates
+router.post("/edit-account/",
+    utilities.checkLogin, 
+    regValidate.updateRules(),
+    regValidate.checkUpdateData,
+    utilities.handleErrors(accountController.updateAccount)
 );
 
 module.exports = router;

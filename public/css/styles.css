@@ -281,6 +281,15 @@ figure img {
   background-color: #eee;
 }
 
+.account-form {
+  text-align: left;
+}
+
+.account-form label, button {
+  margin-left: 1em;
+}
+
+
 @media screen and (max-width: 700px) {
   .calltoaction {
     font-size: .8rem;
