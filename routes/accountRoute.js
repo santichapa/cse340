@@ -47,4 +47,14 @@ router.post("/edit-account/",
     utilities.handleErrors(accountController.updateAccount)
 );
 
+// Route to post the account password change
+router.post("/password-change/",
+    utilities.checkLogin, 
+    regValidate.passwordRules(),
+    regValidate.checkPasswordData,
+    utilities.handleErrors(accountController.changePassword)
+);
+
+router.get("/logout/", utilities.handleErrors(accountController.accountLogout))
+
 module.exports = router;

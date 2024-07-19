@@ -2,6 +2,7 @@ const utilities = require("../utilities/");
 const accountModel = require("../models/account-model");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { cookie } = require("express-validator");
 require("dotenv").config();
 
 /* ****************************************
@@ -159,11 +160,8 @@ async function updateAccount(req, res) {
             "notice",
             `Congratulations, ${account_firstname}, your account has been updated!`
         )
-        res.status(201).render("account/account-management", {
-            title: "Account Management",
-            nav,
-            errors: null,
-        })
+        res.clearCookie("jwt");
+        res.status(201).redirect("/account/")
     } else {
         req.flash("error", "Sorry, the update failed.");
         res.status(501).render("account/account-management", {
@@ -173,4 +171,41 @@ async function updateAccount(req, res) {
     }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, buildEditAccount, updateAccount }
+/* ****************************************
+*  Process Password Change
+* *************************************** */
+async function changePassword(req, res) {
+    let nav = await utilities.getNav();
+    const {account_password, account_id} = req.body;
+
+    // Hash the password before storing
+    let hashedPassword
+    try {
+        // regular password and cost (salt is generated automatically)
+        hashedPassword = await bcryptjs.hashSync(account_password, 10)
+    } catch (error) {
+        req.flash("error", 'Sorry, there was an error processing the new password.')
+        res.status(500).redirect("/account/")
+    }
+    
+    const regResult = await accountModel.changePassword(hashedPassword, parseInt(account_id))
+
+    if (regResult) {
+        req.flash(
+            "notice",
+            `Congratulations, your password has been reset. Please log in.`
+        )
+        res.clearCookie("jwt");
+        res.status(201).redirect("/account/login")
+    } else {
+        req.flash("error", "Sorry, the password change failed.");
+        res.status(501).render("/account/")
+    }
+}
+
+async function accountLogout(req, res, next) {
+    res.clearCookie("jwt");
+    res.redirect("../../")
+}
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, buildEditAccount, updateAccount, changePassword, accountLogout }
