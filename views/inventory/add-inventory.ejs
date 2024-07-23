@@ -16,7 +16,7 @@
 <form action="/inv/add-inventory" method="post" class="wf vehicle-form">
     <div><span>ALL FIELDS ARE REQUIRED</span></div>
     <label>Classification
-        <%= classificationList %>
+        <%- classificationList %>
     </label>
     <label>Make <input type="text" name="inv_make" id="inv_make" placeholder="min of 3 characters" pattern="[A-Za-z0-9]{3,}" title="Three or more alphanumeric characters" value="<% locals.inv_make %>" required></label>
     <label>Model <input type="text" name="inv_model" id="inv_model" placeholder="min of 3 characters" pattern="[A-Za-z0-9]{3,}" title="Three or more alphanumeric characters" value="<% locals.inv_model %>" required></label>
