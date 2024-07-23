@@ -327,21 +327,5 @@ invCont.deleteInventoryItem = async function (req, res) {
   }
 }
 
-// else {
-//   req.flash("notice", "Sorry, the inventory update failed.");
-//   let invData = await invModel.getVehicleByInventoryId(inv_id)
-//   invData = invData[0]
-//   const itemName = `${invData.inv_make} ${invData.inv_model}`
-//   res.status(501).render("inventory/delete-confirm", {
-//     title: "Delete " + itemName,
-//     nav,
-//     errors: null,
-//     inv_id: inv_id,
-//     inv_make: invData.inv_make,
-//     inv_model: invData.inv_model,
-//     inv_year: invData.inv_year,
-//     inv_price: invData.inv_price,
-//   })
-// }
 
 module.exports = invCont
