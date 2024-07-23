@@ -203,6 +203,9 @@ async function changePassword(req, res) {
     }
 }
 
+/* ****************************************
+*  Process Account Logout
+* *************************************** */
 async function accountLogout(req, res, next) {
     res.clearCookie("jwt");
     res.redirect("../../")
