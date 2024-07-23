@@ -12,11 +12,16 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
   const className = data[0].classification_name
-  res.render("./inventory/classification", {
-    title: className + " vehicles",
-    nav,
-    grid,
-  })
+  if (data[0].classification_approval == true) { // if the classification is approved then the page is loaded, else redirected to homepage
+      res.render("./inventory/classification", {
+        title: className + " vehicles",
+        nav,
+        grid,
+      })
+  } else {
+    res.redirect("../../")
+  }
+  
 }
 
 /* ***************************
@@ -28,11 +33,16 @@ invCont.buildByInventoryId = async function (req, res, next) {
   const detail = await utilities.buildVehicleDetail(data)
   let nav = await utilities.getNav()
   const vehicleName = `${data[0].inv_year} ${data[0].inv_make} ${data[0].inv_model}`
-  res.render("./inventory/detail", {
-    title: `${vehicleName}`,
-    nav,
-    detail
-  })
+  if (data[0].inv_approval == true) {
+    res.render("./inventory/detail", {
+      title: `${vehicleName}`,
+      nav,
+      detail
+    })
+  } else {
+    res.redirect("../../")
+  }
+  
 }
 
 /* ***************************

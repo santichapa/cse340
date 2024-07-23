@@ -13,6 +13,7 @@ Util.getNav = async function (req, res, next) {
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
   data.rows.forEach((row) => {
+    if (row.classification_approval == true) {
     list += "<li>"
     list +=
       '<a href="/inv/type/' +
@@ -23,6 +24,7 @@ Util.getNav = async function (req, res, next) {
       row.classification_name +
       "</a>"
     list += "</li>"
+    }
   })
   list += "</ul>"
   return list
@@ -36,23 +38,26 @@ Util.buildClassificationGrid = async function(data){
   if(data.length > 0){
     grid = '<ul id="inv-display">'
     data.forEach(vehicle => { 
-      grid += '<li>'
-      grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
-      + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
-      + ' details"><img src="' + vehicle.inv_thumbnail 
-      +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
-      +' on CSE Motors" /></a>'
-      grid += '<div class="namePrice">'
-      grid += '<hr />'
-      grid += '<h2>'
-      grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
-      + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
-      + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
-      grid += '</h2>'
-      grid += '<span>$' 
-      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
-      grid += '</div>'
-      grid += '</li>'
+      if (vehicle.inv_approval == true) {
+        grid += '<li>'
+        grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
+        + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
+        + ' details"><img src="' + vehicle.inv_thumbnail 
+        +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
+        +' on CSE Motors" /></a>'
+        grid += '<div class="namePrice">'
+        grid += '<hr />'
+        grid += '<h2>'
+        grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
+        grid += '</h2>'
+        grid += '<span>$' 
+        + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
+        grid += '</div>'
+        grid += '</li>'
+      }
+      
     })
     grid += '</ul>'
   } else { 
@@ -67,7 +72,7 @@ Util.buildClassificationGrid = async function(data){
 Util.buildVehicleDetail = async function (data) {
   const v = data[0]
   let detail
-  if (data.length > 0) {
+  if (data.length > 0 && v.inv_approval == true) {
     detail = `
     <div class="detailview">
     <img src="${v.inv_image}" alt="Image of ${v.inv_make} ${v.inv_model}">
