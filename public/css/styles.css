@@ -147,8 +147,9 @@ figure img {
   color: blue;
 }
 
-.error {
-  color: red;
+.errors {
+  margin: 1em;
+  color: rgb(175, 0, 0);
 }
 
 /* ========== CLASSIFICATION STYLING ==========*/
@@ -255,6 +256,10 @@ figure img {
 
 .vehicle-form label, button {
   margin-left: 1em;
+}
+
+.vehicle-form p{
+  margin: 1em;
 }
 
 #invDisplay {

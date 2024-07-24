@@ -15,14 +15,20 @@
 
 <div class="approvalForm">
   <form method="post" class="wf vehicle-form">
-    <p class="errors">Warning, rejected classifications will be deleted.</p>  
-    <label>Classification <%- classificationList %></label>
+    <p class="errors">Warning, rejected inventory items will be deleted.</p>  
+    <label>Vehicle/Inventory Item: <%- inventoryList %></label>
+    <div id="invDisplayFieldset">
+
+  </div>
     <label>Approved by: <input type="text" name="account_firstname" id="account_firstname" required value="<%= locals.account_firstname %>" readonly>
       <input type="text" name="account_lastname" id="account_lastname" required value="<%= locals.account_lastname %>" readonly></label>
-    <button type="submit" formaction="/inv/classification-approval/approve">Approve</button>
-    <button type="submit" formaction="/inv/classification-approval/reject">Reject</button>
+    <button type="submit" formaction="/inv/inventory-approval/approve">Approve</button>
+    <button type="submit" formaction="/inv/inventory-approval/reject">Reject</button>  
     <input type="hidden" name="account_id"
     <% if(locals.account_id) { %> value="<%= locals.account_id %>"
     <% } %>>         
   </form>
 </div>
+
+
+<script src="../../js/inventory-approval.js"></script>

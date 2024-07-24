@@ -197,6 +197,28 @@ Util.buildUnapprovedClassificationList = async function (classification_id = nul
   return classificationList
 }
 
+/* **************************************
+* Build the inventory select list for the inventory item approval
+* ************************************ */
+Util.buildUnapprovedInventoryList = async function (inv_id = null) {
+  let data = await invModel.getUnapprovedInventory()
+  let inventoryList =
+    '<select name="inv_id" id="inventoryList" class="classList" required>'
+    inventoryList += "<option value='' disabled selected>Choose a vehicle</option>"
+  data.forEach((row) => {
+    inventoryList += '<option value="' + row.inv_id + '"'
+    if (
+      inv_id != null &&
+      row.inv_id == inv_id
+    ) {
+      inventoryList += " selected "
+    }
+    inventoryList += `>${row.inv_year} ${row.inv_make} ${row.inv_model}</option>`
+  })
+  inventoryList += "</select>"
+  return inventoryList
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

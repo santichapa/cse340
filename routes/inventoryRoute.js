@@ -52,6 +52,12 @@ router.get("/getInventory/:classification_id",
     utilities.checkAccountType,
     utilities.handleErrors(invController.getInventoryJSON))
 
+// Route to deliver the Inv approval view
+router.get("/getUnapprovedInventory/:inv_id", 
+    utilities.checkLogin,
+    utilities.checkAccountType,
+    utilities.handleErrors(invController.getUnapprovedInventoryJSON))
+
 // Route to vehicle edit view    
 router.get("/edit/:inv_id", 
     utilities.checkLogin,
@@ -95,5 +101,23 @@ router.post("/classification-approval/reject",
     utilities.checkLogin,
     utilities.checkAccountType,
     utilities.handleErrors(invController.rejectClassification))
+
+// Route to approve or delete inventory view
+router.get("/inventory-approval/", 
+    utilities.checkLogin,
+    utilities.checkAccountType,
+    utilities.handleErrors(invController.buildInventoryApproval))
+
+// Route to approve inventory
+router.post("/inventory-approval/approve", 
+    utilities.checkLogin,
+    utilities.checkAccountType,
+    utilities.handleErrors(invController.approveInventoryItem))
+
+// Route to delete inventory
+router.post("/inventory-approval/reject", 
+    utilities.checkLogin,
+    utilities.checkAccountType,
+    utilities.handleErrors(invController.rejectInventoryItem))
 
 module.exports = router;

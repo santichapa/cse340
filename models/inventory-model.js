@@ -149,6 +149,45 @@ async function rejectClassification(classification_id) {
   }
 }
 
+/* ***************************
+ *  Get inventory item that is not approved
+ * ************************** */
+async function getUnapprovedInventory() {
+  try {
+    const data = await pool.query(`SELECT * FROM public.inventory WHERE inv_approval = false ORDER BY inv_id`)
+    // console.log(data)
+    return data.rows
+  } catch (error) {
+    console.error("getUnapprovedInventory error" + error)
+  }
+}
+
+/* *****************************
+*   Approve classification
+* *************************** */
+async function approveInventoryItem(inv_id, account_id) {
+  try {
+      const sql = "UPDATE public.inventory SET inv_approval = true, inv_approvedbyid = $2 WHERE inv_id = $1 RETURNING *"
+      return await pool.query(sql, [inv_id, account_id])
+  } catch (error) {
+      console.log(error)
+      return error.message
+  }
+}
+
+/* *****************************
+ *   Delete rejected inventory Item
+ * *************************** */
+async function rejectInventoryItem(inv_id) {
+  try {
+    const sql = "DELETE FROM inventory WHERE inv_id = $1"
+    return await pool.query(sql, [inv_id])
+  } catch (error) {
+    console.log(error)
+    new Error("Delete Classification Error")
+  }
+}
+
 module.exports = { 
   getClassifications, 
   getInventoryByClassificationId, 
@@ -159,5 +198,8 @@ module.exports = {
   deleteInventoryItem, 
   getUnapprovedClassifications,
   approveClassification,
-  rejectClassification
+  rejectClassification,
+  getUnapprovedInventory,
+  approveInventoryItem,
+  rejectInventoryItem
 }

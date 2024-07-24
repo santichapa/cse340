@@ -189,6 +189,18 @@ invCont.getInventoryJSON = async (req, res, next) => {
 }
 
 /* ***************************
+ *  Return Unapproved Inventory As JSON
+ * ************************** */
+invCont.getUnapprovedInventoryJSON = async (req, res, next) => {
+  const invData = await invModel.getUnapprovedInventory()
+  if (invData[0]) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
+  }
+}
+
+/* ***************************
  *  Build edit vehicle view
  * ************************** */
 invCont.buildEditInventory = async function (req, res, next) {
@@ -357,7 +369,7 @@ invCont.buildClassApproval = async function (req, res, next) {
 }
 
 /* ****************************************
-*  Process delete inventory item
+*  Process approve classification
 * *************************************** */
 invCont.approveClassification = async function (req, res) {
   let nav = await utilities.getNav();
@@ -386,7 +398,7 @@ invCont.approveClassification = async function (req, res) {
 }
 
 /* ****************************************
-*  Process delete inventory item
+*  Process delete rejected classification
 * *************************************** */
 invCont.rejectClassification = async function (req, res) {
   let nav = await utilities.getNav();
@@ -414,5 +426,81 @@ invCont.rejectClassification = async function (req, res) {
   }
 }
 
+/* ***************************
+ *  Build Inventory approval form view
+ * ************************** */
+invCont.buildInventoryApproval = async function (req, res, next) {
+  let nav = await utilities.getNav();
+
+  let inventoryList = await utilities.buildUnapprovedInventoryList();
+  let accountData = res.locals.accountData
+  res.render("inventory/inventory-approval", {
+    title: "Approve Inventory",
+    nav,
+    errors: null,
+    inventoryList: inventoryList,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_id: accountData.account_id
+  })
+}
+
+/* ****************************************
+*  Process approve inventory item
+* *************************************** */
+invCont.approveInventoryItem = async function (req, res) {
+  let nav = await utilities.getNav();
+  let inventoryList = await utilities.buildUnapprovedInventoryList();
+
+  const { inv_id, account_id } = req.body
+  let accountData = res.locals.accountData
+  const approveResult = await invModel.approveInventoryItem(inv_id, account_id)
+  if (approveResult) {
+      req.flash(
+          "notice",
+          `Congratulations, inventory item approved.`
+      )
+      res.status(201).redirect("../")
+  } else {
+      req.flash("error", "Sorry, the approval failed.");
+      res.status(501).render("inventory/inventory-approval", {
+        title: "Approve Inventory",
+        nav,
+        inventoryList,
+        account_firstname: accountData.account_firstname,
+        account_lastname: accountData.account_lastname,
+        account_id: accountData.account_id
+      })
+  }
+}
+
+/* ****************************************
+*  Process delete rejected inventory item
+* *************************************** */
+invCont.rejectInventoryItem = async function (req, res) {
+  let nav = await utilities.getNav();
+  let inventoryList = await utilities.buildUnapprovedInventoryList();
+
+  const { inv_id } = req.body
+  let accountData = res.locals.accountData
+  const rejectResult = await invModel.rejectInventoryItem(inv_id)
+  if (rejectResult) {
+      req.flash(
+          "notice",
+          `Inventory item successfully removed.`
+      )
+      res.status(201).redirect("../")
+  } else {
+      req.flash("error", "Sorry, the deletion failed.");
+      res.status(501).render("inventory/inventory-approval", {
+        title: "Approve Inventory",
+        nav,
+        inventoryList,
+        account_firstname: accountData.account_firstname,
+        account_lastname: accountData.account_lastname,
+        account_id: accountData.account_id
+      })
+  }
+}
 
 module.exports = invCont
