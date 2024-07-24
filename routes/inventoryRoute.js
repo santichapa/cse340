@@ -78,4 +78,22 @@ router.post("/delete/",
     utilities.checkAccountType,
     utilities.handleErrors(invController.deleteInventoryItem))
 
+// Route to approve or delete classification view
+router.get("/classification-approval/", 
+    utilities.checkLogin,
+    utilities.checkAccountType,
+    utilities.handleErrors(invController.buildClassApproval))
+
+// Route to approve classification
+router.post("/classification-approval/approve", 
+    utilities.checkLogin,
+    utilities.checkAccountType,
+    utilities.handleErrors(invController.approveClassification))
+
+// Route to delete classification
+router.post("/classification-approval/reject", 
+    utilities.checkLogin,
+    utilities.checkAccountType,
+    utilities.handleErrors(invController.rejectClassification))
+
 module.exports = router;

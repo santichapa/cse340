@@ -116,4 +116,48 @@ async function deleteInventoryItem(inv_id) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getVehicleByInventoryId, addNewClassification, addNewVehicle, updateInventory, deleteInventoryItem }
+/* ***************************
+ *  Get all unapproved classification data
+ * ************************** */
+async function getUnapprovedClassifications(){
+  return await pool.query("SELECT * FROM public.classification WHERE classification_approval = false ORDER BY classification_name")
+}
+
+/* *****************************
+*   Approve classification
+* *************************** */
+async function approveClassification(classification_id, account_id) {
+  try {
+      const sql = "UPDATE public.classification SET classification_approval = true, classification_approvedbyid = $2 WHERE classification_id = $1 RETURNING *"
+      return await pool.query(sql, [classification_id, account_id])
+  } catch (error) {
+      console.log(error)
+      return error.message
+  }
+}
+
+/* *****************************
+ *   Delete rejected classification
+ * *************************** */
+async function rejectClassification(classification_id) {
+  try {
+    const sql = "DELETE FROM classification WHERE classification_id = $1"
+    return await pool.query(sql, [classification_id])
+  } catch (error) {
+    console.log(error)
+    new Error("Delete Classification Error")
+  }
+}
+
+module.exports = { 
+  getClassifications, 
+  getInventoryByClassificationId, 
+  getVehicleByInventoryId, 
+  addNewClassification, 
+  addNewVehicle, 
+  updateInventory, 
+  deleteInventoryItem, 
+  getUnapprovedClassifications,
+  approveClassification,
+  rejectClassification
+}

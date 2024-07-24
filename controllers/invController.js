@@ -337,5 +337,82 @@ invCont.deleteInventoryItem = async function (req, res) {
   }
 }
 
+/* ***************************
+ *  Build Classification approval form view
+ * ************************** */
+invCont.buildClassApproval = async function (req, res, next) {
+  let nav = await utilities.getNav();
+
+  let classificationList = await utilities.buildUnapprovedClassificationList();
+  let accountData = res.locals.accountData
+  res.render("inventory/classification-approval", {
+    title: "Approve Classifications",
+    nav,
+    errors: null,
+    classificationList: classificationList,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_id: accountData.account_id
+  })
+}
+
+/* ****************************************
+*  Process delete inventory item
+* *************************************** */
+invCont.approveClassification = async function (req, res) {
+  let nav = await utilities.getNav();
+  let classificationList = await utilities.buildUnapprovedClassificationList();
+
+  const { classification_id, account_id } = req.body
+  let accountData = res.locals.accountData
+  const approveResult = await invModel.approveClassification(classification_id, account_id)
+  if (approveResult) {
+      req.flash(
+          "notice",
+          `Congratulations, classification approved.`
+      )
+      res.status(201).redirect("../")
+  } else {
+      req.flash("error", "Sorry, the approval failed.");
+      res.status(501).render("inventory/classification-approval", {
+        title: "Approve Classifications",
+        nav,
+        classificationList,
+        account_firstname: accountData.account_firstname,
+        account_lastname: accountData.account_lastname,
+        account_id: accountData.account_id
+      })
+  }
+}
+
+/* ****************************************
+*  Process delete inventory item
+* *************************************** */
+invCont.rejectClassification = async function (req, res) {
+  let nav = await utilities.getNav();
+  let classificationList = await utilities.buildUnapprovedClassificationList();
+
+  const { classification_id } = req.body
+  let accountData = res.locals.accountData
+  const rejectResult = await invModel.rejectClassification(classification_id)
+  if (rejectResult) {
+      req.flash(
+          "notice",
+          `Classification successfully removed.`
+      )
+      res.status(201).redirect("../")
+  } else {
+      req.flash("error", "Sorry, the deletion failed.");
+      res.status(501).render("inventory/classification-approval", {
+        title: "Approve Classifications",
+        nav,
+        classificationList,
+        account_firstname: accountData.account_firstname,
+        account_lastname: accountData.account_lastname,
+        account_id: accountData.account_id
+      })
+  }
+}
+
 
 module.exports = invCont
