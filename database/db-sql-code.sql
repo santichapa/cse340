@@ -251,7 +251,8 @@ SET inv_image = REPLACE(inv_image, '/images', '/images/vehicles'),
 inv_thumbnail = REPLACE(inv_thumbnail, '/images', '/images/vehicles');
 
 ALTER TABLE inventory
-ADD COLUMN inv_approval BOOLEAN DEFAULT false;
+ADD COLUMN inv_approval BOOLEAN DEFAULT false,
+ADD COLUMN inv_approvedbyid INT DEFAULT 0;
 
 ALTER TABLE classification
 ADD COLUMN classification_approval BOOLEAN DEFAULT false;
